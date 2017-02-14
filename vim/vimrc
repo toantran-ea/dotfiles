@@ -1,0 +1,47 @@
+" APPEARANCE
+" Display line numbers
+set number
+set relativenumber
+" Mapping to toggle line numbers
+nmap <C-N><C-N> :set invnumber<CR>
+" Number of lines for the command window
+set cmdheight=2
+" Syntax highlighting
+syntax enable
+" Enables filetype detction
+filetype plugin indent on
+
+
+" EDITTING
+" Make sure there are at least 3 lines under the cursor
+set scrolloff=3
+
+
+" TABS AND INDENTING
+" Auto indenting ON
+set autoindent
+" Copies the previous indentation on auto indenting
+set copyindent
+" Uses spaces instead of tabs
+set expandtab
+" Sets tab stop = 4 - my fav stop
+set tabstop=4
+" Number of spaces used for auto indenting
+set shiftwidth=4
+" Inserts tabs on the start of a line according to shiftwidth
+set smarttab
+" Uses multiple of shiftwidth when indenting with '<' and '>'
+set shiftround
+
+
+" KEYMAPPING
+" Makes jk enable Esc 
+inoremap jk <Esc>
+
+" Shortcut to toggle Paste mode
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
+
+" ss for saving
+nmap ss :w<CR>
