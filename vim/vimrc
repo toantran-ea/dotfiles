@@ -2,14 +2,12 @@
 " Display line numbers
 set number
 set relativenumber
-" Mapping to toggle line numbers
-nmap <C-N><C-N> :set invnumber<CR>
 " Number of lines for the command window
 set cmdheight=2
 " Syntax highlighting
 syntax enable
-" Enables filetype detction
-filetype plugin indent on
+" Enables filetype detection
+filetype off
 
 
 " EDITTING
@@ -32,11 +30,35 @@ set shiftwidth=4
 set smarttab
 " Uses multiple of shiftwidth when indenting with '<' and '>'
 set shiftround
+" Underline current cursor-line
+:hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white
+" Map leader key
+let mapleader=" "
 
 
 " KEYMAPPING
-" Makes jk enable Esc 
+" Makes jk enable Esc
 inoremap jk <Esc>
+
+" Navigating between tabs
+" Go to tab by number
+noremap <leader>1 1gt
+noremap <leader>2 2gt
+noremap <leader>3 3gt
+noremap <leader>4 4gt
+noremap <leader>5 5gt
+noremap <leader>6 6gt
+noremap <leader>7 7gt
+noremap <leader>8 8gt
+noremap <leader>9 9gt
+noremap <leader>0 :tablast<cr>
+
+
+" Underline current row
+color desert
+set cursorline
+hi CursorLine term=bold cterm=bold guibg=Grey40
+" End underline row config
 
 " Shortcut to toggle Paste mode
 nnoremap <F2> :set invpaste paste?<CR>
@@ -45,3 +67,71 @@ set showmode
 
 " ss for saving
 nmap ss :w<CR>
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" NerdTree plugin
+Plugin 'scrooloose/nerdtree'
+" CtrlP plugin
+Plugin 'ctrlpvim/ctrlp.vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+"/// Start NerdTree configurations
+" Auto open NerdTree on start VIm
+autocmd vimenter * NERDTree
+"  open NERDTree automatically when vim starts up on opening a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+" open NERDTree with Ctrl+n
+map <F2> :NERDTreeToggle<CR>
+map <F3> :CtrlP<CR>
+" Highlight differnt file extension in NerdTree
+" NERDTree File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+
+" close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+"/// End NerdTree configurations
+"Change color based on filetypes
+autocmd BufEnter * colorscheme default
+autocmd BufEnter *.php colorscheme Tomorrow-Night
+autocmd BufEnter *.py colorscheme Tomorrow
+" End of change colors based on filetypes
+
+" Highlight search results
+:set hlsearch
+
+" tab and shift-tab config
+" for command mode
+nnoremap <S-Tab> <<
+" for insert mode
+inoremap <S-Tab> <C-d>
+
