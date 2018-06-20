@@ -1,0 +1,6 @@
+# custom Android Studio VM options, see https://developer.android.com/studio/intro/studio-config.html
+-Xms1024m
+-Xmx4096m
+-XX:MaxPermSize=1024m
+-XX:ReservedCodeCacheSize=256m
+-XX:+UseCompressedOops
